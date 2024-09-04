@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: 20.11.0
           cache: 'npm'
-      - run: npm
+      - run: npm install
 
   build:
     needs: [eslint, test]
