@@ -1,7 +1,7 @@
-export default function sum(items) {
-  let result = 0;
-  for (const item of items) {
-    result += item;
+export default class HTTP {
+  constructor() {
+    //this.CardsTodo = document.querySelector(".card-todo");
+    //this.allCards();
+
   }
-  return result;
 }
