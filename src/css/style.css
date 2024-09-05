@@ -1,6 +1,5 @@
 *{
   padding: 0;margin: 0;font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
 }
 body {
   background-color: white;
@@ -17,6 +16,9 @@ body {
 }
 .text-end{
   text-align: right;
+}
+.text-center{
+  text-align: center;
 }
 .fw-bold{
   font-weight: bold;
@@ -44,12 +46,15 @@ body {
   border: 1px solid #ccc;
   margin-bottom: -1px;
 }
+.ticketName{
+
+}
 .col{
   flex: 0 0 100%;
   max-width: 100%;
   padding: 1rem;
   box-sizing: border-box;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .col-1{
   flex: 0 0 8.333333333333333%;
@@ -107,4 +112,25 @@ body {
 }
 .btnTicketRemove:after{
   content: "✖";
+}
+.modal[open]{
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: white;
+  border: none;
+  border-radius: 1rem;
+  padding: 30px;
+  max-width: 300px;
+  width: 100%;
+}
+.modal[open]::backdrop{
+  background: rgba(10,10,10,0.7);
+}
+.modal input, .modal textarea{
+  width: 100%;
+  margin: 0.5rem 0;
+  box-sizing: border-box;
+  padding: 1rem;
+  font-size: 1rem;
 }
