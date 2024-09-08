@@ -1,6 +1,7 @@
 // TODO: write code here
 const container = document.querySelector('.container');
 const modal = document.querySelector('.modal');
+const url = 'http://localhost:6060';
 
 const btnAddTicket = document.createElement('button');
 btnAddTicket.classList.add('btn','btnAddTicket');
@@ -28,7 +29,7 @@ btnAddTicket.addEventListener('click', () => {
       description: form.get('ticketDescription'),
       created: Date.now(),
     }
-    let response = fetch('http://localhost:6060?method=createTicket', {
+    let response = fetch(url + '?method=createTicket', {
       method: 'POST',
       body: JSON.stringify(newTicket)
     });
@@ -69,7 +70,7 @@ function closeModal() {
   }
 }
 function getTickets() {
-  fetch('http://localhost:6060?method=allTickets')
+  fetch(url + '?method=allTickets')
     .then((response) => {
       return response.json()
     })
@@ -82,10 +83,15 @@ function getTickets() {
         const checked = element.status === true? 'checked' : '';
         const elementDiv= document.createElement('div');
         elementDiv.classList.add('row', 'ticket-row');
-        elementDiv.insertAdjacentHTML("beforeend", '<div class="col col-1"><input class="inputDone" type="checkbox" id="' + element.id + '" '+ checked +'></div>');
-        elementDiv.insertAdjacentHTML("beforeend", '<div class="col col-6"><div class="ticketName cursor-pointer fw-bold">' + element.name + '</div><div class="ticketDescription mt-3 d-none">' + element.description + '</div></div>');
-        elementDiv.insertAdjacentHTML("beforeend", '<div class="col col-3 text-end">' + new Date(element.created).toLocaleDateString('ru-RU', options) + '</div>');
-        elementDiv.insertAdjacentHTML("beforeend", '<div class="col col-2 text-end"><button type="button" class="btn btnTicketEdit me-2"></button><button type="button" class="btn btnTicketRemove"></button>');
+        elementDiv.insertAdjacentHTML("beforeend", `
+            <div class="col col-1"><input class="inputDone" type="checkbox" id="${element.id}" ${checked}></div>
+            <div class="col col-6"><div class="ticketName cursor-pointer fw-bold">${element.name}</div><div class="ticketDescription mt-3 d-none">${element.description}</div></div>
+            <div class="col col-3 text-end">${new Date(element.created).toLocaleDateString('ru-RU', options)}</div>
+            <div class="col col-2 text-end"><button type="button" class="btn btnTicketEdit me-2"></button><button type="button" class="btn btnTicketRemove"></button>
+            `);
+        //elementDiv.insertAdjacentHTML("beforeend", '');
+        //elementDiv.insertAdjacentHTML("beforeend", '');
+        //elementDiv.insertAdjacentHTML("beforeend", '');
         allTickets.appendChild(elementDiv); //Добавляем новые Тикеты
       })
 
@@ -104,13 +110,13 @@ function getTickets() {
           const newPost = {
             status: status
           }
-          fetch('http://localhost:6060?method=updateById&id='+input.target.id, {method: 'POST',body: JSON.stringify(newPost)})
+          fetch(url + '?method=updateById&id='+input.target.id, {method: 'POST',body: JSON.stringify(newPost)})
         })
         const id = element.querySelector('.inputDone').id;
         //Редактирование тикета
         element.querySelector('.btnTicketEdit').addEventListener('click', () => {
 
-          fetch('http://localhost:6060?method=ticketById&id='+id)
+          fetch(url + '?method=ticketById&id='+id)
             .then((response) => {
               return response.json()
             })
@@ -137,7 +143,7 @@ function getTickets() {
                   name: form.get('ticketName'),
                   description: form.get('ticketDescription'),
                 }
-                fetch('http://localhost:6060?method=updateById&id='+id, {method: 'POST',body: JSON.stringify(body)})
+                fetch(url + '?method=updateById&id='+id, {method: 'POST',body: JSON.stringify(body)})
                 getTickets();
                 modal.close();
               })
@@ -157,7 +163,7 @@ function getTickets() {
           closeModal();
           modal.showModal();
           modal.querySelector('.ticketRemove').addEventListener('click', (e) => {
-            fetch('http://localhost:6060?method=deleteById&id='+id)
+            fetch(url + '?method=deleteById&id='+id)
             getTickets();
             modal.replaceChildren();
             modal.insertAdjacentHTML("afterbegin", `
@@ -177,6 +183,3 @@ function getTickets() {
       }
     )
 }
-
-
-
